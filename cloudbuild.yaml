@@ -2,34 +2,34 @@ steps:
   # 1. Install Helm (if it's not already present)
   - name: 'gcr.io/cloud-builders/kubectl'
     args: ['version']  # Check if Helm is installed
-  - name: 'gcr.io/cloud-builders/helm'
-    args: ['version']  # Only install if necessary
-    entrypoint: 'bash'
-    args:
-      - '-c'
-      - |
-        if ! helm version --client >/dev/null 2>&1; then
-          curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3
-          chmod 700 get_helm.sh
-          ./get_helm.sh
-        fi
+  # - name: 'gcr.io/cloud-builders/helm'
+  #   args: ['version']  # Only install if necessary
+  #   entrypoint: 'bash'
+  #   args:
+  #     - '-c'
+  #     - |
+  #       if ! helm version --client >/dev/null 2>&1; then
+  #         curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3
+  #         chmod 700 get_helm.sh
+  #         ./get_helm.sh
+  #       fi
 
-  # 2. Add the Grafana Helm chart repository
-  - name: 'gcr.io/cloud-builders/helm'
-    args: ['repo', 'add', 'grafana', 'https://grafana.github.io/helm-charts']
+  # # 2. Add the Grafana Helm chart repository
+  # - name: 'gcr.io/cloud-builders/helm'
+  #   args: ['repo', 'add', 'grafana', 'https://grafana.github.io/helm-charts']
 
-  # 3. Update Helm dependencies
-  - name: 'gcr.io/cloud-builders/helm'
-    args: ['dependency', 'update', 'charts/grafana'] 
+  # # 3. Update Helm dependencies
+  # - name: 'gcr.io/cloud-builders/helm'
+  #   args: ['dependency', 'update', 'charts/grafana'] 
 
-  # 4. Install (or upgrade) the Grafana chart
-  - name: 'gcr.io/cloud-builders/helm'
-    args: [
-        'upgrade',
-        '--install',
-        'my-grafana-release',  # Replace with your desired release name
-        'charts/grafana',
-        '--namespace', 'monitoring',  # Replace with your target namespace
-        '--set', 'persistence.enabled=true',  # Example values override
-        '--set', 'adminPassword=yourSuperSecretPassword' 
-    ]
+  # # 4. Install (or upgrade) the Grafana chart
+  # - name: 'gcr.io/cloud-builders/helm'
+  #   args: [
+  #       'upgrade',
+  #       '--install',
+  #       'my-grafana-release',  # Replace with your desired release name
+  #       'charts/grafana',
+  #       '--namespace', 'monitoring',  # Replace with your target namespace
+  #       '--set', 'persistence.enabled=true',  # Example values override
+  #       '--set', 'adminPassword=yourSuperSecretPassword' 
+  #   ]
