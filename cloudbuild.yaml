@@ -8,7 +8,7 @@ steps:
 
     # 1. Install Helm (if it's not already present)
   - name: 'gcr.io/cloud-builders/kubectl'
-      env:
+    env:
       - CLOUDSDK_COMPUTE_REGION=asia-south1
       - CLOUDSDK_COMPUTE_ZONE=asia-south1-b
       - CLOUDSDK_CONTAINER_CLUSTER=jmc-dev2
