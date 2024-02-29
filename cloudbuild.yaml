@@ -2,13 +2,17 @@ steps:
   - name: 'gcr.io/cloud-builders/gcloud'
     env:
       - CLOUDSDK_COMPUTE_REGION=asia-south1
-      - CLOUDSDK_COMPUTE_ZONE=asia-south1-1
+      - CLOUDSDK_COMPUTE_ZONE=asia-south1-b
       - CLOUDSDK_CONTAINER_CLUSTER=jmc-dev2
     args: ['config', 'list'] 
 
     # 1. Install Helm (if it's not already present)
   - name: 'gcr.io/cloud-builders/kubectl'
-    args: ['version']  # Check if Helm is installed
+      env:
+      - CLOUDSDK_COMPUTE_REGION=asia-south1
+      - CLOUDSDK_COMPUTE_ZONE=asia-south1-b
+      - CLOUDSDK_CONTAINER_CLUSTER=jmc-dev2
+    args: ['get', 'nodes']  # Check if Helm is installed
   # - name: 'gcr.io/cloud-builders/helm'
   #   args: ['version']  # Only install if necessary
   #   entrypoint: 'bash'
